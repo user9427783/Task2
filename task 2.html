@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Color Changing Shape with Text</title>
+    <style>
+        /* Global reset for margin and padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body background and styling */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(45deg, #6a11cb, #2575fc); /* Gradient background */
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        /* Main container for the 3D rotating shape with perspective */
+        .container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            transform-style: preserve-3d;
+            animation: rotate 10s infinite linear;
+            perspective: 600px; /* Adding perspective for 3D effect */
+        }
+
+        /* Style for each 3D shape (the sides of the cube) */
+        .shape {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #ff6347, #ffcc00);
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.7); /* Soft glow */
+            transition: background-color 1s ease, transform 1s ease;
+        }
+
+        /* Each face of the cube gets a different rotation */
+        .shape:nth-child(1) { transform: rotateX(0deg) translateZ(150px); }
+        .shape:nth-child(2) { transform: rotateY(90deg) translateZ(150px); }
+        .shape:nth-child(3) { transform: rotateY(180deg) translateZ(150px); }
+        .shape:nth-child(4) { transform: rotateY(270deg) translateZ(150px); }
+        .shape:nth-child(5) { transform: rotateX(90deg) translateZ(150px); }
+        .shape:nth-child(6) { transform: rotateX(-90deg) translateZ(150px); }
+
+        /* Styling for the text in the center of the shape */
+        .text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 30px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8); /* Glowing effect */
+            z-index: 1;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Keyframe animation to rotate the 3D shape */
+        @keyframes rotate {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+
+        /* Adding a classy background shadow and glow */
+        .container {
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8); /* Shadow effect */
+            border-radius: 20px; /* Smooth edges */
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Create the 6 sides of the 3D shape -->
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+
+        <!-- Centered text inside the rotating 3D shape -->
+        <div class="text">Code Fusion</div>
+    </div>
+
+    <script>
+        // Function to change the color of the 3D shape every 30 seconds with gradient effect
+        function changeColor() {
+            const shapes = document.querySelectorAll('.shape');
+            const colorPairs = [
+                ['#ff6347', '#ffcc00'],
+                ['#8e44ad', '#3498db'],
+                ['#1abc9c', '#f39c12'],
+                ['#e74c3c', '#9b59b6'],
+                ['#f1c40f', '#2ecc71'],
+                ['#34495e', '#e67e22']
+            ];
+
+            shapes.forEach((shape, index) => {
+                let [color1, color2] = colorPairs[Math.floor(Math.random() * colorPairs.length)];
+                shape.style.background = `linear-gradient(45deg, ${color1}, ${color2})`;
+            });
+        }
+
+        // Change color every 30 seconds
+        setInterval(changeColor, 30000);
+
+        // Initially call to set colors at the start
+        changeColor();
+    </script>
+</body>
+</html>
